@@ -1,0 +1,77 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="w3-container w3-padding-32 w3-xlarge" style="font-family:'Josefin Sans',sans-serif;padding-bottom: 0;">
+    <div class="container">
+        <h2 style="font-size:45px;font-weight:400;text-align:center;text-transform:uppercase;font-family:'Josefin Sans',sans-serif;padding:20px;margin-bottom:20px;margin-top: 40px;">
+            Shopping Cart
+        </h2>
+        {% if order_count != 0 %}
+        <div class="text-center" style="padding:10px;border-radius: 50px; margin:10px; background: #dee2e6;color: black;">
+            {% for order in orders %}
+
+            <div class="row align-items-center" style="padding:10px;margin-bottom:1px;">
+                <div class="col">
+                    <img class="img-fluid" src="{{ order.pizza.image.url }}" alt="{{order.pizza.name}}" style="border-radius: 30px;width: 60%;height: auto;">
+                </div>
+                <div class="col">
+                    <h2 style="font-family:'Josefin Sans',sans-serif;font-size: 22px;">
+                        {{order.pizza.name}}
+                    </h2>
+                </div>
+                <div class="col"> 
+                    <a href="{% url 'item_increment' order.id %}" style="color:black;font-size: 30px;border: none;" class="btn btn-primary">
+                        +
+                    </a>
+                    <span style="font-family:'Josefin Sans',sans-serif;font-size: 22px;">
+                        {{order.quantity}}
+                    </span>
+                    <a href="{% url 'item_decrement' order.id %}" style="font-size: 32px;color: black;border: none;" class="btn btn-primary">
+                        -
+                    </a>       
+                </div>
+                <div class="col">
+                    <h2 style="font-family:'Josefin Sans',sans-serif;font-size: 22px;">
+                        ₹{{order.pizza.price}}
+                    </h2>     
+                </div>
+            </div>   
+        {% endfor %}
+        </div>
+        <div class="container text-center" style="padding:10px;margin-top:10px;font-size: 20px;">
+            <a href="{% url 'cart_clear' %}" class="btn btn-primary" style="font-size: 20px;">Clear Cart</a>
+            <a href="{% url 'checkout' %}" class="btn btn-primary" style="font-size: 20px;">Checkout</a>
+        </div>
+        {% else %}
+        <div class="container text-center" style="padding:10px;margin-top:10px;">
+            <p style="padding: 10px;margin-bottom: 1.5em;">
+                Currently there is no items in your cart.
+            </p>
+            <a href="{% url 'checkout' %}" class="btn btn-primary disabled" style="font-size: 20px;">
+                Checkout
+            </a>
+            <a href="{% url 'order_history' %}" class="btn btn-primary" style="font-size: 20px;">
+                Order History
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>    
+
+    <script>
+        /*
+        window.setTimeout(function()
+        {
+            location.href = "{% url 'cart_detail' %}";
+        }, 5000);
+        */
+
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        }
+    </script>
+{% endblock %}

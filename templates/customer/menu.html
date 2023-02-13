@@ -1,0 +1,104 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .bgimg {
+    background-image: url("{% static 'images/bg_3.jpg' %}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 750px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .scroll{
+    margin:4px 4px;
+    padding:4px;
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+  }
+
+  .scroll::-webkit-scrollbar {
+    width: 7px;               
+  }
+
+  .scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: gray;
+    outline: 1px solid slategrey;   
+    border-radius: 10px;
+    opacity: 0.6;
+    transition: 1s;
+  }
+
+  .scroll::-webkit-scrollbar-thumb:hover {
+    background-color: darkgray;
+    opacity: 1;
+  }
+</style>
+
+<header class="bgimg w3-display-container" id="home">
+  <div class="container">
+    <div class="w3-display-middle w3-center" style="position: absolute;z-index: 2;">
+      <span class="w3-text-white w3-hide-small" style="font-size:100px;width: 200px;margin:auto;-webkit-backdrop-filter: blur(3px);backdrop-filter: blur(3px);text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">OUR MENU</span>
+      <span class="w3-text-white w3-hide-large w3-hide-medium" style="font-size:60px">OUR MENU</span>
+    </div>
+  </div>
+  
+</header>
+
+<!-- Featured Pizzas -->
+<section class="w3-container w3-padding-64 w3-xlarge" id="featured">
+  <div class="container">
+    <h2 style="font-size:45px;font-weight:400;text-align:center;text-transform:uppercase;font-family:'Josefin Sans',sans-serif;padding:20px;margin-bottom:20px;">
+      Pizzas
+    </h2>
+    <div class="row row-cols-3" style="margin-bottom:10px;">
+      {% for pizza in pizzas %}
+        <div class="col text-center" style="padding:20px;">
+          <div class="card-deck">
+            <div class="card" style="width:18rem;background:transparent;margin:auto;">
+              <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" style="border-radius: 150px;">
+              <div class="card-header">
+                <h5 style="font-family: 'Josefin Sans', sans-serif;">
+                  {{ pizza.name }}
+                </h5>
+              </div>
+              <div class="card-body d-flex flex-column">
+                <p class="card-text mb-4 scroll" style="font-family:'Poppins',sans-serif;font-size:15px;line-height:1.8;font-weight:300;color: gray;">
+                  {{ pizza.description }}
+                </p>
+                <h4 style="color: #fac564;font-weight: 400;font-family: 'Poppins', sans-serif;">
+                  ₹ {{ pizza.price }}
+                </h4>
+                <div class="card-footer">
+                  {% if user.is_authenticated %}
+                  <a href="{% url 'cart_add' pizza.id %}" class="btn btn-primary align-self-center" style="font-family: 'Poppins', sans-serif;">
+                    Add to Cart
+                  </a>
+                  {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-primary align-self-center" style="font-family: 'Poppins', sans-serif;">
+                    Order Now
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>  
+</section>
+
+
+{% endblock %}

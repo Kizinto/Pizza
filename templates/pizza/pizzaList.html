@@ -1,0 +1,103 @@
+{% extends 'staff/main/base.html' %}
+{% block content %}
+<style type="text/css">
+    .scroll{
+    margin:4px 4px;
+    padding:4px;
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+  }
+
+  .scroll::-webkit-scrollbar {
+    width: 7px;               
+  }
+
+  .scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: gray;
+    outline: 1px solid slategrey;   
+    border-radius: 10px;
+    opacity: 0.6;
+    transition: 1s;
+  }
+
+  .scroll::-webkit-scrollbar-thumb:hover {
+    background-color: darkgray;
+    opacity: 1;
+  }
+</style>
+
+    <div class="container text-center">
+        <h1 class="display-4" style="font-weight: bold;margin-top: 30px;color:white;">
+            Pizza List
+        </h1>
+        <a class="btn btn-success" style="margin-top: 20px;margin-bottom: 2em;" href="{% url 'addPizza' %}" role="button">
+            Add a Pizza
+        </a>
+    </div>
+s
+    <div class="container">
+        <!--
+        <div class="row row-cols-3">
+            {% for pizza in pizzas %}
+                <form action="{% url 'deletePizza' pizza.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="col" style="margin-top:15px;margin-bottom:15px;">
+                        <div class="card text-center border-warning h-100" style="box-shadow: 5px 10px 18px #888888;">
+                            <img class="card-img-top" src="{{ pizza.image.url }}" alt="{{ pizza.name }}" style="width:100%;border-bottom:1px solid black;">
+                            <div class="card-body bg-light">
+                                <h4 class="card-title"><b>{{ pizza.name }}</b></h4>
+                                <h6 class="card-subtitle mb-2"><i>₹ {{ pizza.price }}</i></h6>
+                                <p class="card-text">{{ pizza.description }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <input type="submit" class="btn btn-small btn-outline-primary" value="Update" name="update">
+                                <input type="submit" class="btn btn-small btn-outline-danger" value="Delete" name="delete">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+        </div>
+        -->
+
+        <div class="row row-cols-3" style="margin-bottom:10px;">
+          {% for pizza in pizzas %}
+            <form action="{% url 'deletePizza' pizza.id %}" method="post">
+                {% csrf_token %}
+                <div class="col text-center" style="padding:20px;">
+                    <div class="card-deck">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ pizza.image.url }}" alt="{{ pizza.name }}">
+                            <div class="card-header">
+                                <h5>
+                                    {{ pizza.name }}
+                                </h5>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <p class="card-text mb-4 scroll">
+                                  {{ pizza.description }}
+                                </p>
+                                <h4>
+                                  ₹ {{ pizza.price }}
+                                </h4>
+                                <div class="card-footer">
+                                    <input type="submit" class="btn btn-small btn-outline-primary" value="Update" name="update">
+                                    <input type="submit" class="btn btn-small btn-outline-danger" value="Delete" name="delete">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          {% endfor %}
+        </div>
+    </div>
+{% endblock %}

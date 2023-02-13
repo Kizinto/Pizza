@@ -1,0 +1,146 @@
+{% extends 'staff/main/base.html' %}
+{% block content %}
+
+<style type="text/css">
+
+    .resize{
+        padding: 10px;
+        text-align: center;
+        height: 12em;
+        border-radius: 10px;
+        background-color: #323232;
+        color: white;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    }
+
+    .space{
+        padding: 2em;
+    }
+
+    .display-5{
+        padding: 5px;
+        margin-top: 0.8em;
+        margin-bottom: 5px;
+        font-size: 40px;
+    }
+</style>
+
+<section id="#counter">
+    <div class="container text-center">
+        <h3 class="display-5 mt-3" style="font-weight: bold;color:white;">Counter</h3>
+        <ul class="list-group" style="padding: 25px;width: 25%;margin: auto;">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Orders</div>
+                </div>
+                <span class="badge bg-danger bg-gradient rounded-pill">{{ order_count }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Pizzas</div>
+                </div>
+                <span class="badge bg-danger bg-gradient rounded-pill">{{ pizza_count }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Cancelled Orders</div>
+                </div>
+                <span class="badge bg-danger bg-gradient rounded-pill">{{ cancel_order_count }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Completed Orders</div>
+                </div>
+                <span class="badge bg-danger bg-gradient rounded-pill">{{ completed_orders_count }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Reviews</div>
+                </div>
+                <span class="badge bg-danger bg-gradient rounded-pill">{{ review_count }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Contacts</div>
+                </div>
+                <span class="badge bg-danger bg-gradient rounded-pill">{{ contact_count }}</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+
+<div class="container">
+    <h3 class="display-5 mt-3 mb-5 text-center" style="font-weight: bold;color:white;">
+        Operations
+    </h3>
+    <div class="row">
+        <div class="col">
+            <section id="#orders" class="space">
+                <div class="container resize">
+                  <h3 class="display-5">Orders</h3>
+                  <div>
+                    <a href="{% url 'orders' %}" class="btn btn-outline-warning" role="button">View Orders</a>
+                  </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col">      
+            <section id="#pizza" class="space">
+                <div class="container resize">
+                  <h3 class="display-5">Pizza</h3>
+                  <div>
+                   <a href="{% url 'viewPizza' %}" class="btn btn-outline-warning" role="button">View All</a>
+                  </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col">
+            <section id="#cancellation" class="space">
+                <div class="container resize">
+                    <h3 class="display-5" style="margin-top: 5px;font-size:38px;">Cancellation Requests</h3>
+                    <div>
+                        <a href="{% url 'order_cancel_request_list' %}" class="btn btn-outline-warning" role="button">View All</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <section id="#reviews" class="space">
+              <div class="container resize">
+                <h3 class="display-5">Reviews</h3>
+                <div>
+                    <a href="{% url 'review_list' %}" class="btn btn-outline-warning" role="button">View All</a>
+                </div>
+              </div>
+            </section>
+        </div>
+
+        <div class="col">       
+            <section id="#contacts" class="space">
+              <div class="container resize">
+                <h3 class="display-5">Contacts</h3>
+                <div>
+                    <a href="{% url 'contact_list' %}" class="btn btn-outline-warning" role="button">View All</a>
+                </div>
+              </div>
+            </section>
+        </div>
+
+        <div class="col">
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

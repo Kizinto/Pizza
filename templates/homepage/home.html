@@ -1,0 +1,434 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+{% load static %}
+
+<style type="text/css">
+  .bgimg{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("{% static 'images/pizza.jpg' %}");
+    min-height: 90%;  
+  }
+
+  .bgimg2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("{% static 'images/map.jpg' %}");
+    min-height: 90%;
+  }
+
+  .shown{
+    font-size: 30px;
+    color: gold;
+  }
+
+  .main-content {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    font-family: "roboto", sans-serif;
+  }
+
+  .m-b-30 {
+    margin-bottom: 30px;
+  }
+
+  .rating-card {
+    background-color: #fff;
+    font-family: "roboto", sans-serif;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 5px 10px 18px #212123;;
+    color: black;
+    border-radius: 20px;
+  }
+
+  .rating-number {
+    font-size: 50px;
+    font-weight: 600;
+    color: black;
+    font-family: "roboto", sans-serif;
+  }
+
+  .rating-number small {
+    font-size: 16px;
+    font-family: "roboto", sans-serif;
+  }
+
+  .average{
+    font-size: 50px;
+    color: gold;
+  }
+
+  .rating-progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*margin-bottom: -20px*/
+  }
+
+  .rating-progress .rating-grade {
+    color: black;
+    padding: 3px 20px 3px 0;
+    float: left;
+    width: 50px;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 21px;
+  }
+
+  .rating-progress .progress {
+    float: left;
+    width: calc(100% - 110px);
+    border-radius: 10px;
+  }
+
+  .rating-progress .progress .bg-warning {
+    background-color: #ffc107 !important;
+    border-radius: 10px;
+  }
+
+  .rating-progress .rating-value {
+    padding: 3px 0 3px 20px;
+    float: left;
+    width: 60px;
+    color: black;
+    font-size: 21px;
+  }
+
+  .rating-progress:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .star{
+    font-size: 20px;
+    color: gold;
+    margin-top: 5px;
+  }
+
+  progress {
+    border-radius: 10px; 
+    width: 180px;
+    height: 16px;
+    box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.2 );
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: #E9ECEF;
+    border-radius: 10px;
+  }
+
+  progress::-webkit-progress-value {
+    background-color: #FFC107;
+    border-radius: 10px;
+  }
+
+  progress::-moz-progress-bar {
+    /* style rules */
+  }
+
+  .scroll{
+    margin:4px 4px;
+    padding:4px;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+  }
+
+  .scroll::-webkit-scrollbar {
+    width: 13px;               
+  }
+
+  .scroll::-webkit-scrollbar-track {
+    background-color: #fff;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: #f89778;
+    outline: 1px solid slategrey;   
+    border-radius: 10px;
+    opacity: 0.6;
+    transition: 1s;
+  }
+
+  .scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #f4511e;
+    opacity: 1;
+  }
+</style>
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-padding" style="position: absolute;z-index: 2;">
+    <span class="w3-tag w3-xlarge">Open from 10am to 12pm : Monday - Saturday</span>
+  </div>
+  <div class="w3-display-middle w3-center" style="position: absolute;z-index: 2;">
+    <span class="w3-text-white w3-hide-small" style="font-size:100px;width: 200px;margin:auto;-webkit-backdrop-filter: blur(3px);backdrop-filter: blur(3px);text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">FAST<br>QUICK RELIABLE</span>
+    <span class="w3-text-white w3-hide-large w3-hide-medium" style="font-size:60px"><b>FAST<br>QUICK RELIABLE</b></span>
+    <p><a href="{% url 'menu' %}" class="w3-button w3-xxlarge w3-black">Let me see the menu</a></p>
+  </div>
+</header>
+
+<!-- Menu Container -->
+<div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
+  <div class="w3-content">
+
+    <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">THE MENU</h1>
+    <div class="w3-row w3-center w3-border w3-border-dark-grey">
+      <a href="javascript:void(0)" onclick="openMenu(event, &#39;Pizza&#39;);" id="myLink">
+        <div class="w3-col s4 tablink w3-padding-large w3-hover-red w3-red">Foods</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openMenu(event, &#39;Pasta&#39;);">
+        <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Drinks</div>
+      </a>
+    </div>
+
+    <div id="Pizza" class="w3-container menu w3-padding-32 w3-white" style="display: block;">
+      <h1 style="color:black;"><b>VEGGIE PARADISE</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹280</span></h1>
+      <p class="w3-text-grey">Goldern Corn, Black Olives, Capsicum & Red Paprika</p>
+      <hr>
+
+      <h1 style="color:black;"> <b>PANEER MAKHANI</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹250</span></h1>
+      <p class="w3-text-grey">Paneer, Capsicum on Makhani Sauce</p>
+      <hr>
+
+      <h1 style="color:black;"><b>CHEESE N CORN</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹200</span></h1>
+      <p class="w3-text-grey">Cheese, Golden Corn</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Veg Extravaganza</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹280</span></h1>
+      <p class="w3-text-grey">Golden corn, exotic black olives, crunchy onions, crisp capsicum, succulent mushrooms, juicyfresh tomatoes, jalapeno with extra cheese</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Mexican Green Wave</b> <span class="w3-tag w3-red w3-round">Hot!</span><span class="w3-right w3-tag w3-dark-grey w3-round">₹290</span></h1>
+      <p class="w3-text-grey"> crunchy onions, crisp capsicum, juicy tomatoes, jalapeno, sprinkling of exotic Mexican herbs.</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Margherita</b> <span class="w3-tag w3-grey w3-round">New</span><span class="w3-right w3-tag w3-dark-grey w3-round">₹200</span></h1>
+      <p class="w3-text-grey">A hugely popular margherita, deliciously tangy single cheese topping</p>
+    </div>
+
+    <div id="Pasta" class="w3-container menu w3-padding-32 w3-white" style="display: none;">
+      <h1 style="color:black;"><b>M.C.Burger</b> <span class="w3-tag w3-grey w3-round">Popular</span> <span class="w3-right w3-tag w3-dark-grey w3-round">₹220</span></h1>
+      <p class="w3-text-grey">Chicken, cheese, grilled onions, ketchup, mustard</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Flamethrower</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹220</span></h1>
+      <p class="w3-text-grey">Chicken, cheese, grilled onions, lettuce, grillied chilis, flamethrower sauce</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Cowboy</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹220</span></h1>
+      <p class="w3-text-grey">Chicken, cheese, onion rings, BBQ sauce</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Wholesome Veg Burger</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹229</span></h1>
+      <p class="w3-text-grey">Potatoes, mix veg double paaty, jalapanos</p>
+      <hr>
+
+      <h1 style="color:black;"><b>Mediterranean Burger</b> <span class="w3-right w3-tag w3-dark-grey w3-round">₹229</span></h1>
+      <p class="w3-text-grey">Falafel, hummus, garlic mayo</p>
+    </div>
+  </div>
+</div>
+
+<!-- About Container -->
+<div class="w3-container w3-padding-64 w3-red w3-grayscale w3-xlarge" id="about">
+  <div class="w3-content">
+    <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">About</h1>
+    <p style="font-size:26px;">The Get It was founded in blabla by Mr. Italiano in lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <p style="font-size:26px;"><strong>The Chef?</strong> Mr. Italiano himself<img src="{% static 'images/chef.jpg' %}" style="width:150px" class="w3-circle w3-right" alt="Chef"></p>
+    <p style="font-size:26px;">We are proud of our interiors.</p>
+    <img src="{% static 'images/onepage_restaurant.jpg' %}" style="width:100%" class="w3-margin-top w3-margin-bottom" alt="Restaurant">
+    <h1><b>Opening Hours</b></h1>
+
+    <div class="w3-row">
+      <div class="w3-col s6">
+        <p style="font-size:26px;">Sunday CLOSED</p>
+        <p style="font-size:26px;">Monday 10:00 - 24:00</p>
+        <p style="font-size:26px;">Tuesday 10:00 - 24:00</p>
+        <p style="font-size:26px;">Wednesday 10.00 - 24.00</p>
+      </div>
+      <div class="w3-col s6">
+        <p style="font-size:26px;">Thursday 10:00 - 24:00</p>
+        <p style="font-size:26px;">Friday 10:00 - 12:00</p>
+        <p style="font-size:26px;">Saturday 10:00 - 23:00</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Overall Rating -->
+<div class="bgimg2 w3-display-container" id="ratings">
+  <section class="main-content">
+    <div class="container">
+      <h1 class="text-center text-uppercase" style="color:white;font-size:68px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);width:200px;margin: auto;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Ratings</h1>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+          <div class="rating-card">
+            <div class="text-center m-b-30">
+              <h4 style="color:black; font-family:'roboto', sans-serif;">Rating Overview</h4>
+              <br>
+              <h1 class="rating-number">{{average_star}}<small> / 5</small></h1>
+              <div class="rating-stars d-inline-block position-relative mr-2">
+                {% if average_star == 1 %}
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star2" class="average">&#9734;</label>
+                <label for="star2" class="average">&#9734;</label>
+                <label for="star2" class="average">&#9734;</label>
+                <label for="star2" class="average">&#9734;</label>
+                {% elif average_star == 2 %}
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star2" class="average">&#9734;</label>
+                <label for="star2" class="average">&#9734;</label>
+                <label for="star2" class="average">&#9734;</label>
+                {% elif average_star == 3 %}
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star2" class="average">&#9734;</label>
+                <label for="star2" class="average">&#9734;</label>
+                {% elif average_star == 4 %}
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star2" class="average">&#9734;</label>
+                {% else %}
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star1" class="average">&#9733;</label>
+                <label for="star2" class="average">&#9733;</label>
+                {% endif %}
+              <div style="color: black;font-size: 20px;"><b>{{total_reviews}} ratings</b></div>
+            </div>
+
+            <div class="rating-divided">
+              <div class="rating-progress">
+                <span class="rating-grade">5<label for="star1" class="star">&#9733;</label></span>
+                <progress value="{{five_star}}" max="{{total_reviews}}"></progress>
+                <span class="rating-value">{{five_star}}</span>
+              </div>
+              <div class="rating-progress">
+                <span class="rating-grade">4<label for="star1" class="star">&#9733;</label></span>
+                <progress value="{{four_star}}" max="{{total_reviews}}"></progress>
+                <span class="rating-value">{{four_star}}</span>
+              </div>
+              <div class="rating-progress">
+                <span class="rating-grade">3 <label for="star1" class="star">&#9733;</label></span>
+                <progress value="{{three_star}}" max="{{total_reviews}}"></progress>
+                <span class="rating-value">{{three_star}}</span>
+              </div>
+              <div class="rating-progress">
+                <span class="rating-grade">2 <label for="star1" class="star">&#9733;</label></span>
+                <progress value="{{two_star}}" max="{{total_reviews}}"></progress>
+                <span class="rating-value">{{two_star}}</span>
+              </div>
+              <div class="rating-progress">
+                <span class="rating-grade">1 <label for="star1" class="star">&#9733;</label></span>
+                <progress value="{{one_star}}" max="{{total_reviews}}"></progress>
+                <span class="rating-value">{{one_star}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Reviews -->
+<div class="w3-container w3-padding-64 w3-xlarge" id="reviews">
+  <div class="container" style="font-family:'Poppins', sans-serif;">
+    <h1 class="w3-center w3-jumbo" style="margin-bottom:64px;">
+      Reviews
+    </h1>
+    <div class="container">
+      <div class="row row-cols-3">
+      {% for review in reviews %}
+      <div class="col d-flex align-items-stretch">
+        <div class="card-deck" style="margin: auto;">
+          <div class="card text-white text-center" style="width: 12em;margin-top:10px;margin-bottom: 30px;background-color: #424242;box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);">
+            <div class="card-header" style="text-transform: uppercase;">
+              {{review.user.username}}
+            </div>
+            <div class="card-body d-flex flex-column">
+              <p class="card-text mb-4 scroll" style="font-size:16px;">
+                {{review.feedback}}
+              </p> 
+            </div>
+            <div class="card-footer align-self-center" style="background-color:rgba(0, 0, 0, 0);">
+              {% if review.ratings == 1 %}
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star2" class="shown">&#9734;</label>
+                <label for="star2" class="shown">&#9734;</label>
+                <label for="star2" class="shown">&#9734;</label>
+                <label for="star2" class="shown">&#9734;</label>
+              {% elif review.ratings == 2 %}
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star2" class="shown">&#9734;</label>
+                <label for="star2" class="shown">&#9734;</label>
+                <label for="star2" class="shown">&#9734;</label>
+              {% elif review.ratings == 3 %}
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star2" class="shown">&#9734;</label>
+                <label for="star2" class="shown">&#9734;</label>
+              {% elif review.ratings == 4 %}
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star2" class="shown">&#9734;</label>
+              {% else %}
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star1" class="shown">&#9733;</label>
+                <label for="star2" class="shown">&#9733;</label>
+              {% endif %}      
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div> 
+    </div>
+  </div>
+</div>
+
+
+<!-- Bottom Footer -->
+<section class="w3-center w3-xxlarge" style="background-color:#222;color: #fff;padding-top: 20px;padding-bottom: 20px;">
+    <div class="container">
+      <h1 style="padding:10px;margin-bottom:20px;">More At</h1>
+      <div class="row" style="font-size:30px;">
+        <div class="col" style="background-color:#1e1e1e;padding-bottom: 3rem;padding-top: 3rem;box-sizing: border-box;line-height: 1.8;">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          <p>(+91)890 102 1542</p>
+        </div>
+        <div class="col" style="background-color:#1c1c1c;padding-bottom: 3rem;padding-top: 3rem;box-sizing: border-box;line-height: 1.8;">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+          <p>info@gmail.com</p>
+        </div>
+        <div class="col" style="background-color:#252525;padding-bottom: 3rem;padding-top: 3rem;box-sizing: border-box;line-height: 1.8;">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          <p>203 Lake St. Mountain View, Bangalore, Karnataka, India</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

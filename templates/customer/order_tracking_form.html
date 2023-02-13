@@ -1,0 +1,57 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block content %}
+{% include 'messages.html' %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %} 
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
+<style type="text/css">
+  .bgimg{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("{% static 'images/about.jpg' %}");
+    min-height: 100%;
+  }
+
+  .card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem
+  }
+</style>
+
+<div class="bgimg w3-display-container w3-grayscale-min w3-padding-64" id="home">
+    <h1 class="text-center text-uppercase" style="color:white;font-size:64px;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);width:200px;margin: auto;margin-top: 20px;margin-bottom: 55px;">Track Your Order</h1>
+    <form action="{% url 'order_tracking' %}" method="post">
+        {% csrf_token %}
+        <div class="card bg-dark text-white" style="width: 25em;font-size: 20px;margin:auto;font-family: 'Roboto', serif">
+          <div class="card-body text-center">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control text-center" id="floatingInput" placeholder="Enter your order ID" name="order_id" style="background-color: #343a40;color: white;" required maxlength="7">
+                  <label for="floatingInput">Order ID</label>
+                </div>
+                <input type="submit" value="Search" style="font-size: 20px;" name="search" class="btn btn-outline-success">
+          </div>
+        </div>
+        
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        if ($('#msg').length > 0) {
+        $('#msg').remove();
+        }
+    }, 2000)
+</script>
+{% endblock %}

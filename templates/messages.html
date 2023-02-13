@@ -1,0 +1,17 @@
+<style type="text/css">
+.alert {
+    position: relative;
+    padding: 15px 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 18px;
+    font-family: sans-serif, serif;
+    text-align: center;
+    color: black;
+}
+</style>
+{% if messages %}
+    <div class="alert {{ messages.0.tags }} m-2" id="msg" role="alert">
+        <p>{{ messages.0 }}</p>
+    </div>
+{% endif %} 

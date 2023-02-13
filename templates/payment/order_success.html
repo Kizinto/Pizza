@@ -1,0 +1,108 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+{% load static %}
+<style type="text/css">
+    .rating{
+        position:  absolute;
+        left: 50%;
+        transform: translate(-50%, -40%) rotateY(180deg);
+        display: flex;
+    }
+     
+    .rating input{
+        display: none;
+    }
+
+    .rating label{
+        display:  block;
+        cursor: pointer;
+        width: 50px;
+    }
+
+    .rating label:before{
+        content: '\f005';
+        font-family: fontAwesome;
+        position: relative;
+        display: block;
+        font-size: 35px;
+        color: black;
+    }
+
+    .rating label:after{
+        content: '\f005';
+        font-family: fontAwesome;
+        position: absolute;
+        display: block;
+        font-size: 35px;
+        color: gold;
+        top: 0;
+        opacity: 0;
+        transition: .5s;
+        text-shadow: 0 2px 5px rgba(0,0,0,.5);
+    }
+
+    .rating label:hover:after,
+    .rating label:hover ~ label:after,
+    .rating input:checked ~ label:after
+    {
+        opacity: 1;
+    }
+
+    .pink-textarea textarea.md-textarea:focus:not([readonly]) {
+        border-bottom: 1px solid #f48fb1;
+        box-shadow: 0 1px 0 0 #f48fb1;
+    }
+
+    .active-pink-textarea.md-form label.active {
+        color: #f48fb1;
+    }
+    .active-pink-textarea.md-form textarea.md-textarea:focus:not([readonly])+label {
+        color: #f48fb1;
+    }
+
+</style>
+
+<div class="w3-container w3-padding-64 w3-xlarge">
+    <div class="container" style="font-family:'Josefin Sans',sans-serif;padding:20px;">
+        <h1 style="font-size:40px;font-weight:400;text-align:center;text-transform:uppercase;font-family:'Josefin Sans',sans-serif;padding:20px;margin-bottom:20px;margin-top: 40px;">
+            Order Successful
+        </h1>
+
+        <p class="text-center" style="font-size:18px;">
+            Order has been placed successfully. Please copy your order ID for order tracking purpose. It will be in your Order History.
+        </p>
+
+        <h2 style="text-align:center;text-transform:uppercase;font-family:'Josefin Sans',sans-serif;padding:20px;">
+            Please give us your valuable feedback
+        </h2>
+
+        <div class="container">
+            <form action="{% url 'review' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <p class="text-center mt-2">Ratings</p>
+                    <div class="rating">
+                        <input type="radio" name="ratings" value="star1" id="star1" />
+                        <label for="star1"></label>
+                        <input type="radio" name="ratings" value="star2" id="star2" />
+                        <label for="star2"></label>
+                        <input type="radio" name="ratings" value="star3" id="star3" />
+                        <label for="star3"></label>
+                        <input type="radio" name="ratings" value="star4" id="star4" />
+                        <label for="star4"></label>
+                        <input type="radio" name="ratings" value="star5" id="star5" />
+                        <label for="star5"></label>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5em;margin-bottom: 1em;text-align: center;">
+                  <label for="feedback" class="form-label">Your Feedback</label>
+                  <textarea class="form-control" id="feedback" rows="3" name="feedback" placeholder="How Can We Improve"></textarea>
+                </div>
+                <div class="container text-center">
+                    <button type="submit" class="btn btn-primary" style="width:100px;">Submit</button>
+                </div>     
+            </form>
+        </div>         
+    </div>
+</div>
+{% endblock %}

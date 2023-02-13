@@ -1,0 +1,40 @@
+{% extends 'staff/main/base.html' %}
+{% block content %}
+<style type="text/css">
+    .form-group{
+        width: 45%;
+        margin:auto;
+    }
+
+    label{
+        color: white;
+        font-size: 20px;
+        padding: 10px;
+        padding-left:  0;
+    }
+</style>
+
+<div class="container">
+    <h1 class="display-4 text-center" style="font-weight: bold;margin-top: 30px;margin-bottom: 1em;color:white;">
+        Update Pizza Information
+    </h1>
+    <form action="{% url 'updatePizza' pizza_id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" value="{{ pizza.name }}"/>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="text" class="form-control" name="price" value="{{ pizza.price }}"/>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" name="description" value="{{ pizza.description }}"/>
+        </div>
+        <div class="text-center mt-3">
+            <input type="submit" class="btn btn-warning" value="UPDATE" name="update">
+        </div>
+    </form>
+</div>
+{% endblock %}

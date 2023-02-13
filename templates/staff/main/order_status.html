@@ -1,0 +1,36 @@
+{% extends 'staff/main/base.html' %}
+{% block content %}
+    <div class="container text-center">
+        <h1 class="display-4" style="font-weight: bold;margin-top: 30px;margin-bottom: 1em;color:white;">
+            Update Status Of Order
+        </h1>
+        <div class="container" style="width: 50%;margin: auto;padding: 5px;">
+            <form action="{% url 'update_status_form' order_id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="order_stauts" style="font-size:25px;color:white;padding:10px;margin:2px;">
+                        Order Status
+                    </label>
+                    <select class="form-select text-center mt-3 mb-3" aria-label="Default select example" name="order_status" id="order_status">
+                        <option value="order_taken" selected="selected">
+                            Order Taken
+                        </option>
+                        <option value="order_in_progress">
+                            Order In Progress
+                        </option>
+                        <option value="order_delivery_in_progress">
+                            Order Delivery In Progress
+                        </option>
+                        <option value="order_completed">
+                            Order Completed
+                        </option>
+                        <option value="order_cancelled">
+                            Order Cancelled
+                        </option>
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-primary" value="UPDATE" name="update">
+            </form>
+        </div>
+    </div>
+{% endblock %}

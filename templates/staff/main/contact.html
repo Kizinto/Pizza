@@ -1,0 +1,43 @@
+{% extends 'staff/main/base.html' %}
+{% block content %}
+<div class="container text-center">
+    <h1 class="display-4" style="font-weight: bold;margin-top: 30px;margin-bottom: 1em;color:white;">
+        Contacts
+    </h1>
+    {% if contact_count == 0 %}
+    <h5 style="margin-top: 30px;margin-bottom: 1em;color:white;"> 
+        There are no contacts right now.
+    </h5>
+
+    {% else %}
+    <table class="table table-striped table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Message</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contact_list %}
+            <form action="{% url 'delete_contact' contact.id %}" method="post">
+                {% csrf_token %}
+                <tr>
+                    <th>{{ contact.name }}</th>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.message }}</td>
+                    <td>
+                    	<input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">
+                    </td>
+                </tr>
+            </form>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+{% endblock %}

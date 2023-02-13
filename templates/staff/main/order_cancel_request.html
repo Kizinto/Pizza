@@ -1,0 +1,59 @@
+{% extends 'staff/main/base.html' %}
+
+{% block content %}
+    <div class="container text-center">
+        <h1 class="display-4" style="font-weight: bold;margin-top: 30px;margin-bottom: 1em;color:white;">
+            Order Cancel Requests
+        </h1>
+        {% if cancel_count == 0 %}
+        <h5 style="margin-top: 30px;margin-bottom: 1em;color:white;">
+            There no order cancel requests right now.
+        </h5>
+
+        {% else %}
+        <table class="table table-striped table-hover table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Account No</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile No</th>
+                    <th scope="col">Payment Status</th>
+                    <th scope="col">Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <form action="{% url 'delete_cancel_request' order.id %}" method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <th>{{ order.order.order_id }}</th>
+                        <td>{{ order.name }}</td>
+                        <td>{{ order.account_no }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.mobile_no }}</td>
+                        <td>
+                            {% if order.is_returned %}
+                                Paid
+                            {% else %}
+                                Not Paid
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if order.is_returned %}
+                                <input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">
+                            {% else %}
+                                <input type="submit" name="update" class="btn btn-outline-primary" value="Change To Paid">
+                                <input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">
+                            {% endif %}
+                        </td>
+                    </tr>
+                </form>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+{% endblock %}

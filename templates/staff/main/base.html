@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+  <html lang="en">
+    {% load static %}
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="Suyash Phatak">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+      <style type="text/css">
+        body{
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-image: url("{% static 'images/login_bg.jpg' %}");
+          min-height: 90%;
+        }
+      </style>
+    </head>
+
+    <body>
+      <section about="navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'staffHomepage' %}">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin: auto;">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'viewPizza' %}">Pizza</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="{% url 'order_cancel_request_list' %}">Cancellation Requests</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'review_list' %}">Reviews</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contact_list' %}">Contacts</a>
+                </li>
+              </ul>
+              <form class="d-flex">
+                <small style="padding-top: 5px;margin-right: 1rem;font-size: 18px;white-space: nowrap;">
+                  Welcome, {{ user.username }}
+                </small>
+                <a href="{% url 'staffLogout' %}" class="btn btn-outline-success">Logout</a>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </section>
+      {% block content %}
+      {% endblock %}
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body> 
+</html>

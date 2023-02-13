@@ -1,0 +1,222 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .stepper-wrapper {
+        margin-top: 15px;
+        padding: 30px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .stepper-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
+    
+
+    .stepper-item::before {
+        position: absolute;
+        content: "";
+        border-bottom: 2px solid #ccc;
+        width: 100%;
+        top: 20px;
+        left: -50%;
+        z-index: 2;
+    }
+
+    .stepper-item::after {
+        position: absolute;
+        content: "";
+        border-bottom: 2px solid #ccc;
+        width: 100%;
+        top: 20px;
+        left: 50%;
+        z-index: 2;
+    }
+
+    .stepper-item .step-counter {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #ccc;
+        margin-bottom: 6px;
+    }
+
+    .stepper-item.active {
+        font-weight: bold;
+
+    }
+
+    .stepper-item.completed .step-counter {
+        background-color: #4bb543;
+    }
+
+    .stepper-item.completed::after {
+        position: absolute;
+        content: "";
+        border-bottom: 2px solid #4bb543;
+        width: 100%;
+        top: 20px;
+        left: 50%;
+        z-index: 3;
+    }
+
+    .stepper-item.completed .step-counter {
+        background-color: #4bb543;
+    }
+
+    .stepper-item.completed::after {
+        position: absolute;
+        content: "";
+        border-bottom: 2px solid #4bb543;
+        width: 100%;
+        top: 20px;
+        left: 50%;
+        z-index: 3;
+    }
+
+    .stepper-item.completed .step-counter .last{
+        background-color: red;
+    }
+
+    .stepper-item.completed.last::after {
+        position: absolute;
+        content: "";
+        border-bottom: 2px solid red;
+        width: 100%;
+        top: 20px;
+        left: 50%;
+        z-index: 3;
+    }
+
+    .stepper-item:first-child::before {
+        content: none;
+    }
+    .stepper-item:last-child::after {
+        content: none;
+    }
+
+    .step-name{
+        color: #fff;
+    }
+</style>
+
+<div class="w3-center w3-xxlarge w3-padding-64" style="font-family:'Roboto', sans-serif;">   
+    <div class="container">
+        <h1 class="display-4">Order Status</h1>
+        <div class="stepper-wrapper">
+            {% if order.status == 'order_taken' %}
+            <div class="stepper-item active">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Confirmed</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Preparation In Progress</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Delivery In Progress</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Completed</div>
+            </div>
+
+
+            {% elif order.status == 'order_in_progress' %}
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Confirmed</div>
+            </div>
+            <div class="stepper-item active">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Preparation In Progress</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Delivery In Progress</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Completed</div>
+            </div>
+
+            {% elif order.status == 'order_delivery_in_progress' %}
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Confirmed</div>
+            </div>
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Preparation Completed</div>
+            </div>
+            <div class="stepper-item active" id="active">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Delivery In Progress</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Completed</div>
+            </div>
+
+            {% elif order.status == 'order_completed' %}
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Confirmed</div>
+            </div>
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Preparation Completed</div>
+            </div>
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Delivery Completed</div>
+            </div>
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Completed</div>
+            </div>
+
+            {% elif order.status == 'order_cancelled' %}
+            <div class="stepper-item completed">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Confirmed</div>
+            </div>
+            <div class="stepper-item completed last">
+                <div class="step-counter">&#10004;</div>
+                <div class="step-name">Order Preparation Completed</div>
+            </div>
+            <div class="stepper-item completed">
+                <div class="step-counter" style="background-color:red;">&#10006;</div>
+                <div class="step-name">Order Cancelled</div>
+            </div>
+            {% endif %} 
+        </div>
+
+        {% if order.status == "order_completed" %}
+            <p style="padding: 10px; margin: 0;font-size: 20px;">Thank for using our website.</p>
+        {% elif order.status == "order_cancelled" %}
+            <a href="{% url 'menu' %}" class="btn btn-primary">Go to Menu</a>
+        {% else %}
+            <a href="{% url 'order_cancel' %}" class="btn btn-primary">Cancel Order</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
